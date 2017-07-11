@@ -1,12 +1,14 @@
 import React from 'react'
 
-
-const Welcome = React.createClass({
-  goToAge: function(){
-    console.log("play", this.props.parent.welcome)
+class Welcome extends React.Component {
+  constructor() {
+    super();
+    this.goToAge = this.goToAge.bind(this);
+  }
+  goToAge() {
     this.props.parent.welcome.resume()
-  },
-  render: function (){
+  }
+  render() {
     return(
       <div className="welcome">
 
@@ -21,6 +23,6 @@ const Welcome = React.createClass({
       </div>
     )
   }
-})
+}
 
 export default Welcome;

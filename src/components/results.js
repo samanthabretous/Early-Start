@@ -24,33 +24,44 @@ const renderBoy = ({target}) => {
     .to(boy, 2.5, {backgroundPosition: "-1280px 0px", ease:SteppedEase.config(8), repeat: -1, repeatDelay:-.5}, "move")
 }
 
-const Results = React.createClass({
-	getInitialState(){
-		return ({count:0});
-	},
+class Results extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			count: 0,
+		};
+		this.handleClick = this.handleClick.bind(this);
+		this.handleRouter = this.handleRouter.bind(this);
+		this.handleSortBy = this.handleSortBy.bind(this);
+	}
+
 	componentDidMount(){
 		this.clouds = this.addAnimation(renderClouds);
 		this.boy = this.addAnimation(renderBoy);
-	},
-	handleClick(schoolObj, e){
-		this.setState({count: this.state.count+=1});
+	}
+
+	handleClick(schoolObj, e) {
+		this.setState(prevState => ({
+			count: prevState.count += 1
+		}));
 		this.props.addSchool(schoolObj);
-	},
+	}
+
 	handleRouter(){
-		this.props.router.push('/compare')
-	},
+		this.props.router.push('/compare');
+	}
+
 	handleSortBy(event){
-		console.log(event.target.value)
 		const sorted = _.sortBy(this.props.schools, (school) => school[event.target.value]["mean_scale_score"])
-		console.log(sorted)
 		this.props.sortSchools(sorted.reverse())
-	},
+	}
+
 	render(){
 		let displayResults = this.props.schools.map((val, idx)=>{
 			return (
 				<div className="result"key={idx}>
 
-					<MiniMap onMapCreated={this.onMapCreated}latitude={val.latitude} longitude={val.longitude} onClick={this.onClick}/>
+					<MiniMap onMapCreated={this.onMapCreated} latitude={val.latitude} longitude={val.longitude} onClick={this.onClick} />
 					<div className="schoolInfo">
 							<ul className="info">
 								{val.location_name && <li className="schoolName">{val.location_name}</li>}
@@ -60,13 +71,13 @@ const Results = React.createClass({
 							<ul className="skills">
 						    {val.math && <li>Math: {val.math.mean_scale_score}</li>}
 						    {val.english && <li>English: {val.english.mean_scale_score}</li>}
-						    {val.attendance && <li>Attendance: {val.attendance._of_attd_taken+'%'}</li>}
+						    {val.attendance && val.attendance._of_attd_taken && <li>Attendance: {val.attendance._of_attd_taken +'%'}</li>}
 						  </ul>
 						  <div className="checkOuter">
 						  	<Checkbox className='checkbox' onClick={this.handleClick.bind(this, {val})}/>
 						  </div>
 					</div>
-				
+
 				</div>
 			)
 		})
@@ -77,7 +88,7 @@ const Results = React.createClass({
 			  	<div className="buttons">
 				  	<div className="sortByContainer">
 					  	<label htmlFor="sortBy">Sort</label>
-					  	<select 
+					  	<select
 					  		id="sortBy"
 					  		onChange={this.handleSortBy}
 					  	>
@@ -98,7 +109,7 @@ const Results = React.createClass({
 			</div>
 		)
 	}
-});
+};
 
 //STATE
 const mapState = state => ({
@@ -106,5 +117,3 @@ const mapState = state => ({
 })
 
 export default connect(mapState, {addSchool, sortSchools})(GSAP(Results));
-
-

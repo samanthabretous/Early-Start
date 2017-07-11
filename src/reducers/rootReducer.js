@@ -1,5 +1,5 @@
 //REDUX IMPORT
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 
 //REDUCERS
 import schoolReducer from './schoolReducer';

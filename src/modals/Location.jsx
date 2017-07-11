@@ -5,8 +5,13 @@ import {bindActionCreators} from 'redux';
 import {addAddress, addCity, addZipcode, getSchooldata} from '../actions/userActions';
 import {getSchools, getDistrict, getSchoolGrade, getAttendance, getMathScores, getEnglishScores} from '../actions/index'
 
-const Location = React.createClass({
-	handleChange: function(input, event){
+class Location extends React.Component {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+	handleChange(input, event){
 		if(input === 'address'){
 			this.props.addAddress(event.target.value)
 		} else if (input === 'city'){
@@ -14,7 +19,7 @@ const Location = React.createClass({
 		} else if (input === 'zipCode'){
 			this.props.addZipcode(event.target.value)
 		}
-	},
+	}
 	handleClick(e) {
 		e.preventDefault()
 
@@ -61,20 +66,18 @@ const Location = React.createClass({
 		  	english = temp.data
 		  })
 
-		  .then(()=> {
+		  .then(() => {
 		  	return {district , math, english, attendance, grades}
 		  })
 
-		  .then((data)=>{
+		  .then((data) => {
 		  	console.log(data)
 		  	this.props.getSchools(data, '05')
 		  })
 
-	},
-	render:function(){
-		console.log('this props', this.props)
-		console.log('SCHOOLS in render:', this.props.schools)
-		return(
+	}
+	render() {
+		return (
 			<div className="location">
 				<center><h2>Where do you live?</h2>
 
@@ -106,11 +109,11 @@ const Location = React.createClass({
 			)
 		}
 
-});
+};
 
 const mapState = state => ({
-    schools: state.schools,
-    users: state.users
+  schools: state.schools,
+  users: state.users
 });
 
 const  mapDispatchToProps = (dispatch) => {

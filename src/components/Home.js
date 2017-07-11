@@ -1,14 +1,14 @@
 import React from 'react';
 import GSAP from 'react-gsap-enhancer';
-import {TimelineMax, Power0, TweenMax, SteppedEase, Elastic, Bounce } from 'gsap';
+import {TimelineMax, Power0, SteppedEase, Elastic } from 'gsap';
 import Welcome from '../modals/Welcome';
 import Age from '../modals/Age';
 import Location from '../modals/Location';
 
 
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { bindActionCreators } from 'redux';
 
 import {addAddress, addCity, addZipcode} from '../actions/userActions';
 import {getSchools} from '../actions/index'
@@ -17,6 +17,7 @@ const mapState = state => ({
     schools: state.schools,
     users: state.users,
 });
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({addAddress, addCity, addZipcode, getSchools}, dispatch)
 }
@@ -34,7 +35,6 @@ const changeRoutes = (home) => {
 
 const hideWelcome = (utils, app) => {
   const {target} = utils
-  console.log(utils.options.props.router)
   //find elements to animate
   const welcome = target.find({className: 'welcome'})
   const boy = target.find({className: 'spirte'})
@@ -72,12 +72,6 @@ class Home extends React.Component {
     this.welcome = this.addAnimation(hideWelcome, this)
   }
 
-  //   componentDidUpdate() {
-  //    this.switchAnim.tweenTo(this.getCurrentPage())
-  // }
-
-
-
   render(){
     return (
       <div className="home">
@@ -93,4 +87,4 @@ class Home extends React.Component {
   }
 }
 
-export default connect(mapState, mapDispatchToProps)(GSAP(Home));
+export default withRouter(connect(mapState, mapDispatchToProps)(GSAP(Home)));

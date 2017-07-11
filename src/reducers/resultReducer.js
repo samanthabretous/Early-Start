@@ -5,11 +5,12 @@ const _defaultState = {
 const resultReducer = (state = _defaultState, action) => {
 	switch(action.type){
 		case "ADD_SCHOOL" :
-			return ({
-				threeSchools: [...state.threeSchools, 
+			return Object.assign({}, state, {
+				threeSchools: [...state.threeSchools,
 					action.school]
 			})
-		default: return state;
+		default:
+			return state;
 	}
 }
 

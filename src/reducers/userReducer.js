@@ -9,22 +9,23 @@ const _defaultState = {
 const userReducer = (state = _defaultState, action) => {
 	switch(action.type){
 		case "ADD_AGE" :
-			return ({
+			return Object.assign({}, state, {
 				age: action.age
 			})
 		case "ADD_ADDRESS" :
-			return ({
+			return Object.assign({}, state, {
 				address: [action.address]
 			})
 		case "ADD_CITY" :
-			return ({
+			return Object.assign({}, state, {
 				city: [action.city]
 			})
 		case "ADD_ZIPCODE" :
-			return ({
+			return Object.assign({}, state, {
 				zipcode: [action.zipcode]
 			})
-		default: return state;
+		default:
+			return state;
 	}
 }
 

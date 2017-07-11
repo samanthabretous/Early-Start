@@ -16,7 +16,7 @@ const MiniMap = props => {
         lat={props.latitude}
         lng={props.longitude}
         radius={500}
-        onClick={props.onClick} />  
+        onClick={props.onClick} />
       </Gmaps>
     </div>
   )

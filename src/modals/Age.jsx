@@ -1,20 +1,26 @@
 import React from 'react';
-import {TimelineMax, Power0, TweenMax, SteppedEase, Elastic } from 'gsap';
 import {addAge} from '../actions/userActions';
 import {connect} from 'react-redux';
 
-const Age = React.createClass({
-	getInitialState: function(){
-		return{ageRange: ""}
-	},
-	selectedAge: function(event){
+class Age extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			ageRange: ''
+		};
+		this.selectedAge = this.selectedAge.bind(this);
+		this.goToLocation = this.goToLocation.bind(this);
+	}
+
+	selectedAge(event){
 		addAge(event.target.value)
-		console.log(event.target.value)
-	},
+	}
+
 	goToLocation() {
 		this.props.parent.welcome.resume();
-	},
-	render: function(){
+	}
+
+	render(){
 		return(
 			<div className="age" >
 				
@@ -31,7 +37,7 @@ const Age = React.createClass({
 			
 		)
 	}
-});
+};
 
 // function mapDispatchToProps(dispatch) {
 // 	return bindActionCreator({addAge}, dispatch)
